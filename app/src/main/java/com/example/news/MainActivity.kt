@@ -13,10 +13,12 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.news.presentation.onboarding.OnBoarding
 import com.example.styleage.ui.theme.NewsAppTheme
 import androidx.compose.ui.Modifier
+import androidx.core.view.WindowCompat
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        WindowCompat.setDecorFitsSystemWindows(window,false)
         installSplashScreen()
         setContent {
             NewsAppTheme{
