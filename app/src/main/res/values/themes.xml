@@ -3,5 +3,5 @@
     <style name="Theme.News" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
-    </style>
+     </style>
 </resources>
