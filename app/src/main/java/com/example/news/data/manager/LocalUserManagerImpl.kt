@@ -23,7 +23,6 @@ class LocalUserManagerImpl(
     override suspend fun saveAppEntry() {
         context.dataStore.edit { settings->
             settings[PreferencesKeys.APP_ENTRY]=true
-
         }
     }
 

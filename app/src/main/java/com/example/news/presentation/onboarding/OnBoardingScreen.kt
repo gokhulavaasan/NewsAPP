@@ -33,7 +33,9 @@ import com.example.styleage.ui.theme.NewsAppTheme
 import kotlinx.coroutines.launch
 
 @Composable
-fun OnBoarding(){
+fun OnBoarding(
+    event: (OnBoardingEvent)->Unit
+){
     Column(modifier = Modifier.fillMaxSize()) {
         val pagerState = rememberPagerState(initialPage = 0){
             pages.size
@@ -71,7 +73,7 @@ fun OnBoarding(){
                 NewsButton(text = buttonstate.value[1], onClick = {
                     scope.launch {
                         if(pagerState.currentPage==2){
-
+                            event(OnBoardingEvent.SaveAppEntry)
                         }else{
                             pagerState.animateScrollToPage(page = pagerState.currentPage+1) }
                         }
@@ -81,15 +83,4 @@ fun OnBoarding(){
         }
         Spacer(modifier = Modifier.weight(.5f))
     }
-}
-@Preview(showBackground = true)
-@Preview(uiMode = UI_MODE_NIGHT_YES, showBackground = true)
-@Composable
-fun OnBoardingPreview(){
-    NewsAppTheme {
-        Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)){
-            OnBoarding()
-        }
-    }
-
 }
