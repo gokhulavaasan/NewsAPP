@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.news.presentation.common.NewsButton
 import com.example.news.presentation.common.PreviousNewsButton
+import com.example.news.presentation.nvgraph.Route
 import com.example.news.presentation.onboarding.Dimens.pageIndicatorwidth
 import com.example.news.presentation.onboarding.Dimens.titlePadding
 import com.example.news.presentation.onboarding.components.OnBoardingPage
@@ -33,8 +34,8 @@ import com.example.styleage.ui.theme.NewsAppTheme
 import kotlinx.coroutines.launch
 
 @Composable
-fun OnBoarding(
-    event: (OnBoardingEvent)->Unit
+fun OnBoardingScreen(
+    onEvent: (OnBoardingEvent)->Unit
 ){
     Column(modifier = Modifier.fillMaxSize()) {
         val pagerState = rememberPagerState(initialPage = 0){
@@ -73,7 +74,7 @@ fun OnBoarding(
                 NewsButton(text = buttonstate.value[1], onClick = {
                     scope.launch {
                         if(pagerState.currentPage==2){
-                            event(OnBoardingEvent.SaveAppEntry)
+                            onEvent(OnBoardingEvent.SaveAppEntry)
                         }else{
                             pagerState.animateScrollToPage(page = pagerState.currentPage+1) }
                         }
