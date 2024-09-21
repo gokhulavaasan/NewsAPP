@@ -6,5 +6,5 @@ object Dimens {
     val imageSpace=24.dp
     val titlePadding=24.dp
     val indicatorSize=14.dp
-    val pageIndicatorwidth=52.dp
+    val pageIndicatorWidth=52.dp
 }
