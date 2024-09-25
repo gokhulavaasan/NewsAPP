@@ -82,6 +82,10 @@ dependencies {
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     //coil
     implementation("io.coil-kt:coil-compose:2.7.0")
+    //paging items
+    implementation ("androidx.paging:paging-compose:3.3.2")
+    //Compose Foundation
+    implementation ("androidx.compose.foundation:foundation:1.7.2")
 }
 kapt {
     correctErrorTypes = true

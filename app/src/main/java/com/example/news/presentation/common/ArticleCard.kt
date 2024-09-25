@@ -1,5 +1,6 @@
 package com.example.news.presentation.common
 
+import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.annotation.ColorRes
@@ -20,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -27,6 +29,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.news.R
 import com.example.news.domain.model.Article
 import com.example.news.domain.model.Source
@@ -42,6 +45,7 @@ fun ArticleCard(
     article: Article,
     onClick:()->Unit
 ){
+    val context= LocalContext.current
     Row(
         modifier.clickable { onClick() }
     ) {
@@ -49,9 +53,9 @@ fun ArticleCard(
             modifier=Modifier
                 .size(articleCardSize)
                 .clip(MaterialTheme.shapes.medium),
-                contentScale = ContentScale.Crop,
-            model = article.url,
-            contentDescription = null
+            model = ImageRequest.Builder(context).data(article.urlToImage).build(),
+            contentDescription = null,
+            contentScale = ContentScale.Crop
         )
         Column(verticalArrangement = Arrangement.SpaceAround,
             modifier = Modifier
