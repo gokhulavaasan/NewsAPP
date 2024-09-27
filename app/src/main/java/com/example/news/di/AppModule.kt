@@ -1,6 +1,10 @@
 package com.example.news.di
 
 import android.app.Application
+import androidx.room.Room
+import com.example.news.data.local.NewsDao
+import com.example.news.data.local.NewsDatabase
+import com.example.news.data.local.NewsTypeConvertor
 import com.example.news.data.manager.LocalUserManagerImpl
 import com.example.news.data.remote.NewsApi
 import com.example.news.data.repository.NewsRepositoryImpl
@@ -12,14 +16,13 @@ import com.example.news.domain.usecases.app_entry.SaveAppEntry
 import com.example.news.domain.usecases.news.GetNews
 import com.example.news.domain.usecases.news.NewsUseCases
 import com.example.news.util.Constants.BASE_URL
+import com.example.news.util.Constants.NEWS_DATABASE_NAME
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import org.intellij.lang.annotations.PrintFormat
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import javax.inject.Singleton
 
 
@@ -65,5 +68,25 @@ object AppModule {
         return NewsUseCases(
             getNews = GetNews(newsRepository)
         )
+    }
+
+    @Provides
+    @Singleton
+    fun provideNewsDatabse(
+        application: Application
+    ): NewsDatabase{
+        return Room.databaseBuilder(
+            context = application,
+            klass = NewsDatabase::class.java,
+            name = NEWS_DATABASE_NAME
+        ).addTypeConverter(NewsTypeConvertor())
+            .fallbackToDestructiveMigration()
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideDao(newsDatabase: NewsDatabase): NewsDao {
+        return newsDatabase.newsDao
     }
 }
