@@ -10,23 +10,18 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.news.R
 import com.example.news.domain.model.Article
 import com.example.news.presentation.common.ArticlesList
@@ -34,7 +29,7 @@ import com.example.news.presentation.common.SearchBar
 import com.example.news.presentation.nvgraph.Route
 import com.example.news.presentation.onboarding.Dimens.MediumPadding1
 import com.example.news.presentation.onboarding.Dimens.SmallPadding
-import com.loc.newsapp.presentation.common.EmptyContent
+
 @Composable
 fun HomeScreen(articles: LazyPagingItems<Article>, navigate: (String) -> Unit) {
     val titles by remember {
