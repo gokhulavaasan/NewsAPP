@@ -25,4 +25,9 @@ class NewsRepositoryImpl(
             }
         ).flow
     }
+
+    override fun searchNews(searchQuery: String, sources: List<String>): Flow<PagingData<Article>> {
+        TODO("Not yet implemented")
+    }
+
 }

@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
@@ -19,18 +18,38 @@ import com.loc.newsapp.presentation.common.EmptyScreen
 @Composable
 fun ArticlesList(
     modifier: Modifier= Modifier,
+    articles: List<Article>,
+    onClick:(Article)-> Unit
+){
+    LazyColumn(
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(MediumPadding1),
+        contentPadding = PaddingValues(all= ExtraSmallPadding)
+    ) {
+        items(count = articles.size){ it ->
+            val article= articles[it]
+            ArticleCard(article = article, onClick = {onClick(article)})
+        }
+    }
+}
+
+@Composable
+fun ArticlesList(
+    modifier: Modifier= Modifier,
     articles: LazyPagingItems<Article>,
     onClick:(Article)-> Unit
 ){
     val handlingPagingResult = handlePagingResult(articles=articles)
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(MediumPadding1),
-        contentPadding = PaddingValues(all= ExtraSmallPadding)
-    ) {
-        items(count = articles.itemCount){ it ->
-            articles[it]?.let{
-                ArticleCard(article = it, onClick = {onClick(it)})
+    if (handlingPagingResult){
+        LazyColumn(
+            modifier = modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(MediumPadding1),
+            contentPadding = PaddingValues(all= ExtraSmallPadding)
+        ) {
+            items(count = articles.itemCount){ it ->
+                articles[it]?.let{
+                    ArticleCard(article = it, onClick = {onClick(it)})
+                }
             }
         }
     }
