@@ -31,9 +31,9 @@ import com.example.news.presentation.onboarding.Dimens.articleCardSize
 import com.example.styleage.ui.theme.NewsAppTheme
 
 
-fun Modifier.shimmerEffect()=composed {
+fun Modifier.shimmerEffect() = composed {
     val transition = rememberInfiniteTransition(label = "")
-    val alpha=transition.animateFloat(
+    val alpha = transition.animateFloat(
         initialValue = 0.2f,
         targetValue = 0.9f,
         animationSpec = infiniteRepeatable(
@@ -41,29 +41,30 @@ fun Modifier.shimmerEffect()=composed {
             repeatMode = RepeatMode.Reverse
         ), label = ""
     ).value
-    background(color = colorResource(R.color.shimmer).copy(alpha=alpha))
+    background(color = colorResource(R.color.shimmer).copy(alpha = alpha))
 }
 
 @Composable
 fun ArticleCardShimmerEffect(
-    modifier: Modifier=Modifier
-){
+    modifier: Modifier = Modifier
+) {
     Row(
-        modifier=modifier
+        modifier = modifier
     ) {
         Box(
-            modifier=Modifier
+            modifier = Modifier
                 .size(articleCardSize)
                 .clip(MaterialTheme.shapes.medium)
                 .shimmerEffect()
         )
-        Column(verticalArrangement = Arrangement.SpaceAround,
+        Column(
+            verticalArrangement = Arrangement.SpaceAround,
             modifier = Modifier
                 .padding(horizontal = ExtraSmallPadding)
                 .height(articleCardSize)
         ) {
             Box(
-                modifier=Modifier
+                modifier = Modifier
                     .fillMaxWidth()
                     .height(30.dp)
                     .padding(horizontal = MediumPadding1)
@@ -71,7 +72,7 @@ fun ArticleCardShimmerEffect(
             )
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Box(
-                    modifier=Modifier
+                    modifier = Modifier
                         .fillMaxWidth(0.5f)
                         .height(15.dp)
                         .padding(horizontal = MediumPadding1)
@@ -83,9 +84,9 @@ fun ArticleCardShimmerEffect(
 }
 
 @Preview(showBackground = true)
-@Preview(showBackground = true, uiMode =UI_MODE_NIGHT_YES)
+@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
-fun ArticleCardShimmerEffectPreview(){
+fun ArticleCardShimmerEffectPreview() {
     NewsAppTheme {
         ArticleCardShimmerEffect(modifier = Modifier)
     }

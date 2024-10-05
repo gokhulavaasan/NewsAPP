@@ -9,29 +9,30 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
+import com.example.news.domain.model.Article
 import com.example.news.presentation.common.ArticlesList
-import com.example.news.presentation.nvgraph.Route
 import com.example.news.presentation.onboarding.Dimens.MediumPadding1
 
 @Composable
 fun BookmarkScreen(
     state: BookmarkState,
-    navigate:(String) -> Unit
-){
-    Column(modifier = Modifier
+    navigateToDetails: (Article) -> Unit
+) {
+    Column(
+        modifier = Modifier
             .fillMaxWidth()
             .padding(start = MediumPadding1, top = MediumPadding1, end = MediumPadding1)
     ) {
         Text(
             text = "Bookmark",
             style = MaterialTheme.typography.displaySmall.copy(fontWeight = FontWeight.Bold),
-            color = colorResource(com.google.android.material.R.color.cardview_light_background)
+            color = MaterialTheme.colorScheme.background
         )
 
         Spacer(modifier = Modifier.height(MediumPadding1))
 
-        ArticlesList(articles = state.articles, onClick = {navigate(Route.DetailsScreen.route)})
+        ArticlesList(articles = state.articles, onClick = { navigateToDetails })
+
     }
 }

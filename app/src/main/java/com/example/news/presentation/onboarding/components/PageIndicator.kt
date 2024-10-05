@@ -18,16 +18,16 @@ import com.example.news.ui.theme.BlueGray
 
 @Composable
 fun PageIndicator(
-    modifier: Modifier=Modifier,
-    pageSize:Int,
-    selectedPage:Int,
-    selectedColor: Color =MaterialTheme.colorScheme.primary,
+    modifier: Modifier = Modifier,
+    pageSize: Int,
+    selectedPage: Int,
+    selectedColor: Color = MaterialTheme.colorScheme.primary,
     unselectedColor: Color = BlueGray,
-    ){
-    Row (modifier=Modifier, horizontalArrangement = Arrangement.SpaceBetween){
-        repeat(pageSize){page->
+) {
+    Row(modifier = Modifier, horizontalArrangement = Arrangement.SpaceBetween) {
+        repeat(pageSize) { page ->
             Box(
-                modifier= Modifier
+                modifier = Modifier
                     .padding(3.dp)
                     .size(indicatorSize)
                     .clip(CircleShape)

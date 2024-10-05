@@ -13,18 +13,18 @@ import javax.inject.Inject
 @HiltViewModel
 class BookmarkViewModel @Inject constructor(
     private val newsUseCases: NewsUseCases
-): ViewModel() {
+) : ViewModel() {
 
     private val _state = mutableStateOf(BookmarkState())
-    val state:State<BookmarkState> = _state
+    val state: State<BookmarkState> = _state
 
     init {
         getArticles()
     }
 
-    private fun getArticles(){
-        newsUseCases.selectArticles().onEach{
-            _state.value = _state.value.copy(articles = it)
+    private fun getArticles() {
+        newsUseCases.selectArticles().onEach {
+            _state.value = _state.value.copy(articles = it.asReversed())
         }.launchIn(viewModelScope)
     }
 

@@ -3,6 +3,8 @@ package com.example.news.presentation.details
 import android.content.Intent
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.net.Uri
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -14,6 +16,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -28,39 +31,56 @@ import com.example.news.domain.model.Source
 import com.example.news.presentation.details.components.DetailsTopBar
 import com.example.news.presentation.onboarding.Dimens.ArticleImageHeight
 import com.example.news.presentation.onboarding.Dimens.MediumPadding1
+import com.example.news.util.UIComponent
 import com.example.styleage.ui.theme.NewsAppTheme
 
 @Composable
 fun DetailsScreen(
     article: Article,
-    event: (DetailsEvent)-> Unit,
+    event: (DetailsEvent) -> Unit,
+    sideEffect: UIComponent?,
     navigateUp: () -> Unit
 ) {
-
+    Log.d("check", "DetailsScreen")
     val context = LocalContext.current
 
+    LaunchedEffect(key1 = sideEffect) {
+        sideEffect?.let {
+            when (sideEffect) {
+                is UIComponent.Toast -> {
+                    Toast.makeText(context, sideEffect.message, Toast.LENGTH_SHORT).show()
+                    event(DetailsEvent.RemoveSideEffect)
+                }
+
+                else -> Unit
+            }
+        }
+    }
+
     Column(
-        modifier = Modifier.fillMaxSize().statusBarsPadding()
+        modifier = Modifier
+            .fillMaxSize()
+            .statusBarsPadding()
     ) {
         DetailsTopBar(
             onBrowsingClick = {
                 Intent(Intent.ACTION_VIEW).also {
-                    it.data= Uri.parse(article.url)
-                    if(it.resolveActivity(context.packageManager)!=null){
+                    it.data = Uri.parse(article.url)
+                    if (it.resolveActivity(context.packageManager) != null) {
                         context.startActivity(it)
                     }
                 }
             },
             onShareClick = {
                 Intent(Intent.ACTION_SEND).also {
-                    it.putExtra(Intent.EXTRA_TEXT,article.url)
-                    it.type= "text/plain"
-                    if(it.resolveActivity(context.packageManager)!=null){
+                    it.putExtra(Intent.EXTRA_TEXT, article.url)
+                    it.type = "text/plain"
+                    if (it.resolveActivity(context.packageManager) != null) {
                         context.startActivity(it)
                     }
                 }
             },
-            onBookMarkClick = { event(DetailsEvent.SaveArticleEvent)},
+            onBookMarkClick = { event(DetailsEvent.UpsertDeleteArticle(article)) },
             onBackClick = navigateUp
         )
 
@@ -68,13 +88,14 @@ fun DetailsScreen(
             modifier = Modifier.fillMaxWidth(),
             contentPadding = PaddingValues(
                 start = MediumPadding1,
-                top =  MediumPadding1,
+                top = MediumPadding1,
                 end = MediumPadding1
             )
         ) {
-            item{
+            item {
                 AsyncImage(
-                    model = ImageRequest.Builder(context = context).data(article.urlToImage).build(),
+                    model = ImageRequest.Builder(context = context).data(article.urlToImage)
+                        .build(),
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -121,8 +142,11 @@ private fun DetailsScreenPreview() {
                 url = "https://edition.cnn.com/2024/09/25/china/china-hongkong-panda-anniversary-intl-hnk/index.html",
                 urlToImage = "https://media.wired.com/photos/6495d5e893ba5cd8bbdc95af/191:100/w_1280,c_limit/The-EU-Rules-Phone-Batteries-Must-Be-Replaceable-Gear-2BE6PRN.jpg"
             ),
-            event = {}
+            event = {},
+            sideEffect = null
 
-        ) { }
+        ) {
+
+        }
     }
 }

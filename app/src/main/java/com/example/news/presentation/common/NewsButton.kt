@@ -13,26 +13,36 @@ import com.example.news.ui.theme.WhiteGray
 
 @Composable
 fun NewsButton(
-    text:String,
-    onClick:()->Unit
-){
-   TextButton(
-       onClick=onClick,
-       colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary,
-           contentColor = Color.White),
-       shape = RoundedCornerShape(6.dp)
-   ) {
-       Text(text=text, style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold))
-   }
+    text: String,
+    onClick: () -> Unit
+) {
+    TextButton(
+        onClick = onClick,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+            contentColor = Color.White
+        ),
+        shape = RoundedCornerShape(6.dp)
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold)
+        )
+    }
 }
+
 @Composable
 fun PreviousNewsButton(
-    text:String,
-    onClick:()->Unit
-){
-    if (text.isNotEmpty()){
-        TextButton(onClick=onClick) {
-            Text(text=text, style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold), color = WhiteGray)
+    text: String,
+    onClick: () -> Unit
+) {
+    if (text.isNotEmpty()) {
+        TextButton(onClick = onClick) {
+            Text(
+                text = text,
+                style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold),
+                color = WhiteGray
+            )
 
         }
     }
