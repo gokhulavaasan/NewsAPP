@@ -26,19 +26,22 @@ import com.example.news.R
 import com.example.news.domain.model.Article
 import com.example.news.presentation.common.ArticlesList
 import com.example.news.presentation.common.SearchBar
-import com.example.news.presentation.nvgraph.Route
 import com.example.news.presentation.onboarding.Dimens.MediumPadding1
 import com.example.news.presentation.onboarding.Dimens.SmallPadding
 
 @Composable
-fun HomeScreen(articles: LazyPagingItems<Article>, navigate: (String) -> Unit) {
+fun HomeScreen(
+    articles: LazyPagingItems<Article>,
+    navigateToSearch: () -> Unit,
+    navigateToDetails: (Article) -> Unit
+) {
     val titles by remember {
         derivedStateOf {
             if (articles.itemCount > 10) {
                 articles.itemSnapshotList.items
                     .slice(IntRange(start = 0, endInclusive = 9))
-                    .joinToString(separator = " \uD83d\uDFE5"){it.title}
-            }else{
+                    .joinToString(separator = " \uD83d\uDFE5") { it.title }
+            } else {
                 ""
             }
         }
@@ -64,7 +67,7 @@ fun HomeScreen(articles: LazyPagingItems<Article>, navigate: (String) -> Unit) {
             readOnly = true,
             onValueChange = {},
             onClick = {
-                navigate(Route.SearchScreen.route)
+                navigateToSearch()
             },
             onSearch = {}
         )
@@ -75,19 +78,19 @@ fun HomeScreen(articles: LazyPagingItems<Article>, navigate: (String) -> Unit) {
             text = titles,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start= MediumPadding1)
+                .padding(start = MediumPadding1)
                 .basicMarquee(),
             fontSize = 12.sp,
-            color = colorResource(id=R.color.placeholder)
+            color = colorResource(id = R.color.placeholder)
         )
 
         Spacer(modifier = Modifier.height(MediumPadding1))
 
         ArticlesList(
             modifier = Modifier.padding(horizontal = MediumPadding1),
-            articles= articles,
+            articles = articles,
             onClick = {
-                navigate(Route.DetailsScreen.route)
+                navigateToDetails(it)
             }
         )
     }
@@ -99,9 +102,9 @@ fun HomeScreen(articles: LazyPagingItems<Article>, navigate: (String) -> Unit) {
 fun HomeScreenPreview() {
     Column(
         modifier = Modifier
-        .fillMaxSize()
-        .padding(top = MediumPadding1)
-        .statusBarsPadding()
+            .fillMaxSize()
+            .padding(top = MediumPadding1)
+            .statusBarsPadding()
     ) {
         Image(
             painter = painterResource(id = R.drawable.logotypesvg),

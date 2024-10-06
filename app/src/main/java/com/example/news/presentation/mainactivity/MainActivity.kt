@@ -26,23 +26,24 @@ class MainActivity : AppCompatActivity() {
     private val viewModel by viewModels<MainViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        WindowCompat.setDecorFitsSystemWindows(window,false)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         installSplashScreen().apply {
-            setKeepOnScreenCondition{
+            setKeepOnScreenCondition {
                 viewModel.splashCondition.value
             }
         }
         enableEdgeToEdge()
         setContent {
-            NewsAppTheme{
+            NewsAppTheme {
                 ChangeSystemBarsTheme(!isSystemInDarkTheme())
-                Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)){
-                val startDestination= viewModel.startDestination.value
-                NavGraph(startDestination=startDestination)
+                Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
+                    val startDestination = viewModel.startDestination.value
+                    NavGraph(startDestination = startDestination)
                 }
             }
         }
     }
+
     @Composable
     private fun ChangeSystemBarsTheme(lightTheme: Boolean) {
         val barColor = Color.Transparent.toArgb()
@@ -50,10 +51,12 @@ class MainActivity : AppCompatActivity() {
             if (lightTheme) {
                 enableEdgeToEdge(
                     statusBarStyle = SystemBarStyle.light(
-                        barColor, barColor,
+                        barColor,
+                        barColor,
                     ),
                     navigationBarStyle = SystemBarStyle.light(
-                        barColor, barColor,
+                        barColor,
+                        barColor,
                     ),
                 )
             } else {

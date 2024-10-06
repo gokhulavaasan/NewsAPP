@@ -22,11 +22,11 @@ import com.example.styleage.ui.theme.NewsAppTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailsTopBar(
-    onBrowsingClick:() -> Unit,
-    onShareClick:() -> Unit,
-    onBookMarkClick:() -> Unit,
-    onBackClick:() -> Unit
-){
+    onBrowsingClick: () -> Unit,
+    onShareClick: () -> Unit,
+    onBookMarkClick: () -> Unit,
+    onBackClick: () -> Unit
+) {
     TopAppBar(
         title = {},
         modifier = Modifier.fillMaxWidth(),
@@ -46,21 +46,21 @@ fun DetailsTopBar(
         actions = {
             IconButton(onBookMarkClick) {
                 Icon(
-                    painter=painterResource(R.drawable.rounded_bookmark_24),
+                    painter = painterResource(R.drawable.rounded_bookmark_24),
                     contentDescription = null
                 )
             }
 
             IconButton(onShareClick) {
                 Icon(
-                    painter=painterResource(R.drawable.rounded_share_24),
+                    painter = painterResource(R.drawable.rounded_share_24),
                     contentDescription = null
                 )
             }
 
             IconButton(onBrowsingClick) {
                 Icon(
-                    painter=painterResource(R.drawable.rounded_globe_asia_24),
+                    painter = painterResource(R.drawable.rounded_globe_asia_24),
                     contentDescription = null
                 )
             }

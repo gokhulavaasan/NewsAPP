@@ -27,49 +27,55 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun OnBoardingScreen(
-    onEvent: (OnBoardingEvent)->Unit
-){
+    onEvent: (OnBoardingEvent) -> Unit
+) {
     Column(modifier = Modifier.fillMaxSize()) {
-        val pagerState = rememberPagerState(initialPage = 0){
+        val pagerState = rememberPagerState(initialPage = 0) {
             pages.size
         }
-        val buttonstate = remember {
+        val buttonState = remember {
             derivedStateOf {
-                when(pagerState.currentPage){
-                    0 -> listOf("","NEXT")
-                    1-> listOf("PREVIOUS","NEXT")
-                    2-> listOf("PREVIOUS","GET STARTED")
+                when (pagerState.currentPage) {
+                    0 -> listOf("", "NEXT")
+                    1 -> listOf("PREVIOUS", "NEXT")
+                    2 -> listOf("PREVIOUS", "GET STARTED")
                     else -> {
-                        listOf("","")
+                        listOf("", "")
                     }
                 }
             }
         }
-        HorizontalPager(state = pagerState) {index->
+        HorizontalPager(state = pagerState) { index ->
             OnBoardingPage(page = pages[index])
         }
         Spacer(modifier = Modifier.weight(1f))
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal =30.dp)
-            .navigationBarsPadding(),
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 30.dp)
+                .navigationBarsPadding(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
-            ) {
-            val scope= rememberCoroutineScope()
-            PageIndicator(modifier = Modifier.size(pageIndicatorWidth), pageSize = pages.size, selectedPage = pagerState.currentPage)
+        ) {
+            val scope = rememberCoroutineScope()
+            PageIndicator(
+                modifier = Modifier.size(pageIndicatorWidth),
+                pageSize = pages.size,
+                selectedPage = pagerState.currentPage
+            )
 
-            Row (verticalAlignment = Alignment.CenterVertically){
-                PreviousNewsButton(text=buttonstate.value[0], onClick = {
-                    scope.launch { pagerState.animateScrollToPage(page = pagerState.currentPage-1) }
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                PreviousNewsButton(text = buttonState.value[0], onClick = {
+                    scope.launch { pagerState.animateScrollToPage(page = pagerState.currentPage - 1) }
                 })
-                NewsButton(text = buttonstate.value[1], onClick = {
+                NewsButton(text = buttonState.value[1], onClick = {
                     scope.launch {
-                        if(pagerState.currentPage==2){
+                        if (pagerState.currentPage == 2) {
                             onEvent(OnBoardingEvent.SaveAppEntry)
-                        }else{
-                            pagerState.animateScrollToPage(page = pagerState.currentPage+1) }
+                        } else {
+                            pagerState.animateScrollToPage(page = pagerState.currentPage + 1)
                         }
+                    }
 
                 })
             }

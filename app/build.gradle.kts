@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
-
+    id("kotlin-parcelize")
 }
 
 android {
@@ -86,6 +86,13 @@ dependencies {
     implementation ("androidx.paging:paging-compose:3.3.2")
     //Compose Foundation
     implementation ("androidx.compose.foundation:foundation:1.7.2")
+
+    //Room Database
+    implementation("androidx.room:room-runtime:2.6.1")
+    // To use Kotlin Symbol Processing (KSP)
+    kapt("androidx.room:room-compiler:2.6.1")
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation("androidx.room:room-ktx:2.6.1")
 }
 kapt {
     correctErrorTypes = true

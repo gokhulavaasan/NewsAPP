@@ -1,9 +1,6 @@
 package com.example.news.presentation.common
 
-import android.content.Context
-import android.content.res.Configuration
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import androidx.annotation.ColorRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,7 +24,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.news.R
@@ -41,23 +37,24 @@ import com.example.styleage.ui.theme.NewsAppTheme
 
 @Composable
 fun ArticleCard(
-    modifier: Modifier=Modifier,
+    modifier: Modifier = Modifier,
     article: Article,
-    onClick:()->Unit
-){
-    val context= LocalContext.current
+    onClick: (() -> Unit)? = null
+) {
+    val context = LocalContext.current
     Row(
-        modifier.clickable { onClick() }
+        modifier = modifier.clickable { onClick?.invoke() }
     ) {
         AsyncImage(
-            modifier=Modifier
+            modifier = Modifier
                 .size(articleCardSize)
                 .clip(MaterialTheme.shapes.medium),
             model = ImageRequest.Builder(context).data(article.urlToImage).build(),
             contentDescription = null,
             contentScale = ContentScale.Crop
         )
-        Column(verticalArrangement = Arrangement.SpaceAround,
+        Column(
+            verticalArrangement = Arrangement.SpaceAround,
             modifier = Modifier
                 .padding(horizontal = ExtraSmallPadding)
                 .height(articleCardSize)
@@ -80,15 +77,16 @@ fun ArticleCard(
                     )
                 )
 
-                Spacer(modifier=Modifier.width(ExtraSmallPadding2))
+                Spacer(modifier = Modifier.width(ExtraSmallPadding2))
 
-                Icon(painter = painterResource(id = R.drawable.ic_time),
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_time),
                     contentDescription = null,
-                    modifier=Modifier.size(SmallIconSize),
+                    modifier = Modifier.size(SmallIconSize),
                     tint = colorResource(R.color.body)
                 )
 
-                Spacer(modifier=Modifier.width(ExtraSmallPadding2))
+                Spacer(modifier = Modifier.width(ExtraSmallPadding2))
 
                 Text(
                     text = article.publishedAt,
@@ -105,21 +103,22 @@ fun ArticleCard(
 }
 
 @Preview(showBackground = true)
-@Preview(showBackground = true, uiMode =UI_MODE_NIGHT_YES)
+@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
-fun previewArticleCard(){
+fun previewArticleCard() {
     NewsAppTheme {
-        ArticleCard(article = Article(
-            author = "",
-            content="",
-            description="",
-            publishedAt="2 hours",
-            source=Source("","BBC"),
-            title="The train went missing in the random station , the station did not appear always it appear at random place and disappears and village have no idea that village is in constant circulation",
-            url="",
-            urlToImage=""
-        )
-        ){}
+        ArticleCard(
+            article = Article(
+                author = "",
+                content = "",
+                description = "",
+                publishedAt = "2 hours",
+                source = Source("", "BBC"),
+                title = "The train went missing in the random station , the station did not appear always it appear at random place and disappears and village have no idea that village is in constant circulation",
+                url = "",
+                urlToImage = ""
+            )
+        ) {}
     }
 }
 
