@@ -22,6 +22,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -56,7 +57,6 @@ fun DetailsScreen(
             }
         }
     }
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -83,9 +83,11 @@ fun DetailsScreen(
             onBookMarkClick = { event(DetailsEvent.UpsertDeleteArticle(article)) },
             onBackClick = navigateUp
         )
+        // Adding a Spacer for separation
+        Spacer(modifier = Modifier.height(MediumPadding1))
 
         LazyColumn(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(
                 start = MediumPadding1,
                 top = MediumPadding1,
@@ -113,16 +115,23 @@ fun DetailsScreen(
                         id = R.color.text_title
                     )
                 )
+                Spacer(modifier = Modifier.height(MediumPadding1))
 
+
+            }
+            item {
                 Text(
                     text = article.content,
                     style = MaterialTheme.typography.bodyLarge,
-                    color = colorResource(R.color.body)
+                    color = colorResource(R.color.body),
+                    maxLines = Int.MAX_VALUE, // Allows as many lines as needed
+                    overflow = TextOverflow.Visible
                 )
             }
         }
     }
 }
+
 
 @Preview(showBackground = true)
 @Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
