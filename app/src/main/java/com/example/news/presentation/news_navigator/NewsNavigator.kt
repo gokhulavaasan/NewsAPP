@@ -144,7 +144,7 @@ fun NewsNavigator() {
                             article = article,
                             event = viewModel::onEvent,
                             navigateUp = { navController.navigateUp() },
-                            sideEffect = viewModel.sideEffect
+//                            sideEffect = viewModel.sideEffect
                         )
                     }
 
